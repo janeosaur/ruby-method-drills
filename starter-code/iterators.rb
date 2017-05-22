@@ -64,17 +64,32 @@ end
   # returns a list of even-indexed items from the input
 
 def select_every_even array
-
+  # list.select.with_index {|item, index| item if index.even? }
+  array.select.with_index do |el, i|
+    el if i.even?
+  end
 end
 
 #select_every_odd
   # takes in an array
   # returns a list of odd-indexed items
 
+def select_every_odd array
+  array.select.with_index do |el, i|
+    el if i.odd?
+  end
+end
+
 #select_every_n
   # takes in an array
   # returns a list of items at an index evenly divisible by n
   # defaults to an n value of 1
+
+def select_every_n array, n=1
+  array.select.with_index do |el, i|
+    el if i%n == 0
+  end
+end
 
 ## STRETCH ##
 #compile_agenda
@@ -83,3 +98,10 @@ end
   # sorts items by priority ascending (low to high) by default
   # sort order can (optionally) be changed to priority descending
   # the bullet can (optionally) be changed to any symbol
+
+def compile_agenda(agenda_items, order="DESC", bullet="*")
+  sorted_agenda_items = agenda_items.sort_by {|o| o[:priority] }
+  sorted_agenda_items.reverse! if order == "ASC"
+  sorted_agenda_items.map {|o| "#{bullet} #{o[:title]}"  }.join("\n")
+  # whaaaaat just happened here
+end
